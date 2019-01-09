@@ -105,27 +105,7 @@ country=countryCell.getAttribute("title");
         return country;
     }
 
-    public List<String> silverCountries(){
 
-    List<String>Combinednames=new ArrayList<String>();
-    List<WebElement> medals=driver.findElements(By.xpath("//table[@class='wikitable sortable plainrowheaders jquery-tablesorter']//tbody//td[3]"));
-    List<WebElement>names=driver.findElements(By.xpath("//table[@class='wikitable sortable plainrowheaders jquery-tablesorter']//tbody//th//img"));
-    medals.remove(medals.size()-1);
-        medals.remove(medals.size()-1);
-     //   System.out.println(medals.size());
-       // System.out.println(names.size());
-        for (int i = 0; i < medals.size(); i++) {
-            Combinednames.add(i,(names.get(i).getAttribute("title")+"---->"+medals.get(i).getText()));
-        //    System.out.println(Combinednames.get(i));
-        }
-       /* for (WebElement a:medals) {
-            System.out.println(a.getText());
-        }
-        for (WebElement a:names) {
-            System.out.println(a.getAttribute("title"));
-        }*/
-            return Combinednames;
-    }
 
     public int findLocation(String country)
     {
@@ -169,20 +149,68 @@ country=countryCell.getAttribute("title");
     @Test
     public void findtotal18()
     {
-        System.out.println(twoCountries());
+
+        List<String> expectedcountries=new ArrayList<String>();
+        expectedcountries.add("Italy");
+        expectedcountries.add("Australia");
+
+        for (int i = 0; i <expectedcountries.size() ; i++) {
+            Assert.assertEquals(expectedcountries.get(i),twoCountries().get(i));
+        }
+        //System.out.println(twoCountries());
     }
     @Test
     public void findLocation()
     {
 
-        System.out.println("Column is 2 and Row is "+findLocation("Japan"));
+        int expectedrow=6;
+        Assert.assertEquals(expectedrow,findLocation("Japan"));
+       // System.out.println("Column is 2 and Row is "+);
     }
+    public List<String> silverCountries(){
 
+        List<String>Combinednames=new ArrayList<String>();
+        List<WebElement> medals=driver.findElements(By.xpath("//table[@class='wikitable sortable plainrowheaders jquery-tablesorter']//tbody//td[3]"));
+        List<WebElement>names=driver.findElements(By.xpath("//table[@class='wikitable sortable plainrowheaders jquery-tablesorter']//tbody//th//img"));
+        medals.remove(medals.size()-1);
+        medals.remove(medals.size()-1);
+        //   System.out.println(medals.size());
+        // System.out.println(names.size());
+        for (int i = 0; i < medals.size(); i++) {
+            Combinednames.add(i,(names.get(i).getAttribute("title")+"-"+medals.get(i).getText()));
+            //    System.out.println(Combinednames.get(i));
+        }
+       /* for (WebElement a:medals) {
+            System.out.println(a.getText());
+        }
+        for (WebElement a:names) {
+            System.out.println(a.getAttribute("title"));
+        }*/
+        return Combinednames;
+    }
     @Test
     public void silverCountrNames()
     {
-        System.out.println(silverCountries());
+        List<String>Countrynames=new ArrayList<String>();
+        Countrynames.add("United States-37");
+        Countrynames.add("Great Britain-23");
+        Countrynames.add("China-18");
+        Countrynames.add("Russia-17");
+        Countrynames.add("Germany-10");
+        Countrynames.add("Japan-8");
+        Countrynames.add("France-18");
+        Countrynames.add("South Korea-3");
+        Countrynames.add("Italy-12");
+        Countrynames.add("Australia-11");
+
+        for (int i = 0; i <Countrynames.size() ; i++) {
+          //  System.out.println(silverCountries().get(i));
+            Assert.assertEquals(Countrynames.get(i),silverCountries().get(i));
+        }
+       // System.out.println();
     }
+
+
     @Test
     public void sortTest(){
 
@@ -208,10 +236,12 @@ List<WebElement> countries=driver.findElements(By.xpath("//table[@class='wikitab
     @Test
     public void findGoldCountry()
     {
-        System.out.println("Country that has most gold medals:"+mostGold());
-        System.out.println("Country that has most Silver medals:"+mostSilver());
-        System.out.println("Country that has most Bronze medals:"+mostBronze());
-        System.out.println("Country that has most medals:"+mostMedal());
+        String expected="United States";
+        Assert.assertEquals(expected,mostGold());
+        Assert.assertEquals(expected,mostSilver());
+        Assert.assertEquals(expected,mostBronze());
+        Assert.assertEquals(expected,mostMedal());
+
     }
 
 
